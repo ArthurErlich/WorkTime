@@ -14,7 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'cli:convert')]
 class Convert extends Command
 {
-    public function __construct(bool $requirePassword = false)
+    public function __construct()
     {
         // best practices recommend to call the parent constructor first and
         // then set your own properties. That wouldn't work in this case
@@ -25,8 +25,13 @@ class Convert extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input,$output);
+        $format = $input->getOption('format');
 
         $io->title("Work Time converter");
+        if($format != null){
+            $format = strtolower($format);
+            $io->note('Selected Format: '.$format);
+        }
         // ... put here the code to create the user
 
         // this method must return an integer number with the "exit status code"
